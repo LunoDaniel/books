@@ -1,0 +1,13 @@
+package br.com.lunobatista.books.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HomeController {
+
+	@RequestMapping("home/hello")
+	public String Home(){
+		return "Hello World";
+	}
+}
