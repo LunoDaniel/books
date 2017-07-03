@@ -6,7 +6,8 @@ import br.com.lunobatista.books.domain.Book;
 
 public interface BookService {
 	
-	public List<Book> listOfbooks();
-	public Book save();
+	public List<Book> listAll();
+	public Book save(Book book);
+	public void delete(Long id);
 
 }

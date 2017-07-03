@@ -1,6 +1,5 @@
 package br.com.lunobatista.books.domain;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,16 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-@Entity	
+@Entity
 public class Book {
 	
 	private Long id;
 	private String title;
 	private String description;
-	private Date releasedDate;
+	private String releasedDate;
 	private String photoUrl;
 	private String isbn;
 	private List<Author> author;
@@ -49,11 +46,10 @@ public class Book {
 	}
 	
 	@Column(name="relesed_date")
-	@Temporal(TemporalType.DATE)
-	public Date getReleasedDate() {
+	public String getReleasedDate() {
 		return releasedDate;
 	}
-	public void setReleasedDate(Date releasedDate) {
+	public void setReleasedDate(String releasedDate) {
 		this.releasedDate = releasedDate;
 	}
 	
