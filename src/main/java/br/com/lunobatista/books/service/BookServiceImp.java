@@ -25,7 +25,7 @@ public class BookServiceImp implements BookService{
 	}
 
 	@Override
-	public void delete(Book book) {
-		bookRepository.delete(book.getId());;
+	public void delete(Long id) {
+		bookRepository.delete(id);
 	}
 }
