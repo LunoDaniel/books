@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,18 +17,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.lunobatista.books.domain.Author;
 import br.com.lunobatista.books.domain.Book;
+import br.com.lunobatista.books.domain.Comment;
+import br.com.lunobatista.books.service.AuthorService;
 import br.com.lunobatista.books.service.BookService;
+import br.com.lunobatista.books.service.CommentService;
 
 @RestController
 @RequestMapping("api/books")
 public class BookController {
 
 	private BookService bookService;
+	private AuthorService authorService;
+	private CommentService commentService;
 
 	@Autowired
-	public BookController(BookService bookService) {
+	public BookController(BookService bookService, AuthorService authorService, CommentService commentService) {
 		this.bookService = bookService;
+		this.authorService = authorService;
+		this.commentService = commentService;
 	}
 
 	@GetMapping(value = { "", "/" })
@@ -39,24 +46,30 @@ public class BookController {
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)
 	@Transactional
-	public Book saveBook(@RequestBody @Valid Book book, HttpServletRequest request) {
-		try { 
-			book = bookService.save(book);
+	public Book saveBook(@RequestBody Book book, HttpServletRequest request) {
 			
-		} catch (Exception e) {
-			System.err.println(e.getStackTrace());
-		}
+			List<Author> savedAuthors = authorService.saveAuthors(book.getAuthors(), book);
+			List<Comment> savedComments = commentService.saveComments(book.getComments());
+			
+			book.setAuthors(savedAuthors);
+			
+			if( savedComments!= null ){
+				book.setComments(savedComments);
+			}
+			
+			book = bookService.save(book);
+		
 		return book;
 	}
 
-	@PutMapping(value = { "", "/" })
-	public ResponseEntity<Book> updateArticle(@RequestBody Book book) {
+	@PutMapping(value = { "", "/{id}"} )
+	public ResponseEntity<Book> updateBook(@RequestBody Book book) {
 		bookService.save(book);
 		return new ResponseEntity<Book>(book, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = { "", "/" })
-	public ResponseEntity<Void> deleteArticle(@RequestParam("id") Long id) {
+	@DeleteMapping(value = { "", "/{id}" })
+	public ResponseEntity<Void> deleteBook(@RequestParam("id") Long id) {
 		bookService.delete(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}

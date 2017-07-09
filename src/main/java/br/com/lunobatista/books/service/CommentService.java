@@ -8,4 +8,5 @@ public interface CommentService {
 	public List<Comment> listAll();
 	public Comment save(Comment comment);
 	public void delete(Comment comment);
+	public List<Comment> saveComments(List<Comment> comments);
 }

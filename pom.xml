@@ -76,11 +76,11 @@
 						<configuration>
 							<outputDirectory>
 								${basedir}/target/classes/static/</outputDirectory>
-								<resources>
-									<resource>
-										<directory>${basedir}/../books-client/dist</directory>
-									</resource>
-								</resources>
+							<resources>
+								<resource>
+									<directory>${basedir}/../books-client/dist</directory>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>

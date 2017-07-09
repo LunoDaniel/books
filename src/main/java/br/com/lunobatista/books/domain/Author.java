@@ -8,11 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Author {
 	private Long id;
 	private String name;
 	private List<Book> books;
+	
+	public Author(){}
 	
 	@Id @GeneratedValue	
 	public Long getId() {
@@ -30,7 +34,8 @@ public class Author {
 		this.name = name;
 	}
 	
-	@ManyToMany(targetEntity=Book.class)
+	@ManyToMany(mappedBy="authors")
+	@JsonIgnore
 	public List<Book> getBooks() {
 		return books;
 	}

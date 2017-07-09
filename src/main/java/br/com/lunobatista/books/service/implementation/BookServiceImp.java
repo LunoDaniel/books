@@ -1,4 +1,4 @@
-package br.com.lunobatista.books.service;
+package br.com.lunobatista.books.service.implementation;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.lunobatista.books.domain.Book;
 import br.com.lunobatista.books.repository.BookRepository;
+import br.com.lunobatista.books.service.BookService;
 
 @Service
 public class BookServiceImp implements BookService{
